@@ -10,7 +10,9 @@ public class Main {
         //System.out.println(count8(81888));
         //System.out.println(powerN(2,3));
         //System.out.println(countX("xxhixx"));
-        System.out.println(countHi("hi"));
+        //System.out.println(countHi("hi"));
+        int[] numbers = {1, 6, 4};
+        System.out.println(array6(numbers, 0));
 
     }
 
@@ -118,6 +120,29 @@ public class Main {
         else if (str.charAt(0) == 'x') return "y".concat(changeXY(str.substring(1)));
         else return (str.charAt(0) + "").concat(changeXY(str.substring(1)));
     }
+
+    //Given a string, compute recursively (no loops) a new string where all appearances of "pi" have been replaced by "3.14".
+    private static String changePi(String str) {
+        if(str.length() <= 1) return str;
+        else if (str.substring(0, 2).equals("pi")) return "3.14".concat(changePi(str.substring(2)));
+        return (str.charAt(0) + "").concat(changePi(str.substring(1)));
+    }
+
+    //Given an array of ints, compute recursively if the array contains a 6. We'll use the convention of considering only the part of the array that begins at the given index.
+    //In this way, a recursive call can pass index+1 to move down the array. The initial call will pass in index as 0.
+    private static boolean array6(int[] nums, int index) {
+        if (index >= nums.length) return false;
+        else return (nums[index] == 6) || array6(nums, index + 1);
+    }
+
+    //Given an array of ints, compute recursively the number of times that the value 11 appears in the array.
+    private static int array11(int[] nums, int index) {
+        if (index >= nums.length) return 0;
+        else if (nums[index] == 11)
+            return 1 + array11(nums, index + 1);
+        else return array11(nums, index + 1);
+    }
+
 
 
 }
