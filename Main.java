@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -5,7 +7,10 @@ public class Main {
         //System.out.println(bunnyEars(2));
         //System.out.println(bunnyEars2(3));
         //System.out.println(count7(717));
-        System.out.println(count8(81888));
+        //System.out.println(count8(81888));
+        //System.out.println(powerN(2,3));
+        //System.out.println(countX("xxhixx"));
+        System.out.println(countHi("hi"));
 
     }
 
@@ -76,6 +81,42 @@ public class Main {
             else if (n % 10 == 8 && n % 100 == 88) return 2 + count8(n / 10);
             else return count8(n / 10);
         }
+    }
+
+    //Given base and n that are both 1 or more, compute recursively (no loops) the value of base to the n power, so powerN(3, 2) is 9 (3 squared).
+    private static int powerN(int base, int n) {
+        if (n <= 0) return 1;
+        else return base * powerN(base, n - 1);
+    }
+
+    //Given a string, compute recursively (no loops) the number of lowercase 'x' chars in the string.
+    private static int countX(String str) {
+        if (str.length() == 0) return 0;
+        if (str.charAt(0) == 'x') return 1 + countX(str.substring(1));
+        return countX(str.substring(1));
+    }
+
+    //Given a string, compute recursively (no loops) the number of times lowercase "hi" appears in the string.
+    private static int countHi(String str) {
+        if (str.length() <= 1) return 0;
+        //else if (str.length() == 2 && str.charAt(0) == 'h' && str.charAt(1) == 'i') return 1;
+        if (str.charAt(0) == 'h' && str.charAt(1) == 'i') return 1 + countHi(str.substring(2)); //(str.substring(0, 2).equals("hi"))
+        else return countHi(str.substring(1));
+    }
+
+    //Given a string, compute recursively a new string where all the 'x' chars have been removed.
+    private static String noX(String str) {
+        if (!str.contains("x")) return str;
+        else if (str.charAt(0) == 'x') return noX(str.substring(1));
+        else return str.charAt(0) + noX(str.substring(1));
+    }
+
+    //Given a string, compute recursively (no loops) a new string where all the lowercase 'x' chars have been changed to 'y' chars.
+    private static String changeXY(String str) {
+        if (str.length() == 0) return "";
+        //else if (!str.contains("x")) return str;
+        else if (str.charAt(0) == 'x') return "y".concat(changeXY(str.substring(1)));
+        else return (str.charAt(0) + "").concat(changeXY(str.substring(1)));
     }
 
 
