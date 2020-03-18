@@ -138,8 +138,7 @@ public class Main {
     //Given an array of ints, compute recursively the number of times that the value 11 appears in the array.
     private static int array11(int[] nums, int index) {
         if (index >= nums.length) return 0;
-        else if (nums[index] == 11)
-            return 1 + array11(nums, index + 1);
+        else if (nums[index] == 11) return 1 + array11(nums, index + 1);
         else return array11(nums, index + 1);
     }
 
