@@ -12,7 +12,11 @@ public class Main {
         //System.out.println(countX("xxhixx"));
         //System.out.println(countHi("hi"));
         int[] numbers = {1, 6, 4};
-        System.out.println(array6(numbers, 0));
+        //System.out.println(array6(numbers, 0));
+        //System.out.println(parenBit("not really (possible)"));
+        String a = "dsada(dddas)xx";
+        //System.out.println(a.substring(0, a.length() - 1));
+        System.out.println(strCount("cacatcowcat", "cat"));
 
     }
 
@@ -27,6 +31,13 @@ public class Main {
         if (bunnies == 0) return 0;
         else if (bunnies == 1) return 2;
         else return 2 + bunnyEars(bunnies - 1);
+    }
+
+    //The fibonacci sequence
+    private static int fibonacci(int n) {
+        if (n == 0) return 0;
+        else if (n == 1) return 1;
+        else return fibonacci(n - 1) + fibonacci(n - 2);
     }
 
     //We have bunnies standing in a line, numbered 1, 2, ... The odd bunnies (1, 3, ..) have the normal 2 ears. The even bunnies (2, 4, ..) we'll say have 3 ears, because they each have a raised foot.
@@ -142,6 +153,106 @@ public class Main {
         else return array11(nums, index + 1);
     }
 
+    //Given an array of ints, compute recursively if the array contains somewhere a value followed in the array by that value times 10.
+    private static boolean array220(int[] nums, int index) {
+        if (index >= nums.length - 1) return false;
+        else return nums[index + 1] == nums[index] * 10 || array220(nums, index + 1);
+    }
+    //nums.l = 3; index = 3;  3 >= 3-1 --> false | nums.l = 2; index = 3;  2>= 3 -1 --> false | nums.l = 3; index = 2; 2 >= 3 - 1 --> true
+
+    //Given a string, compute recursively a new string where all the adjacent chars are now separated by a "*".
+    private static String allStar(String str) {
+        if (str.length() <= 1) return str;
+        else return str.charAt(0) + "*" + allStar(str.substring(1));
+    }
+
+    //Given a string, compute recursively a new string where identical chars that are adjacent in the original string are separated from each other by a "*".
+    private static String pairStar(String str) {
+        if (str.length() <= 1) return str;
+        else if (str.charAt(0) == str.charAt(1)) return str.charAt(0) + "*" + pairStar(str.substring(1));
+        else return str.charAt(0) + pairStar(str.substring(1));
+    }
+
+    //Given a string, compute recursively a new string where all the lowercase 'x' chars have been moved to the end of the string.
+    private static String endX(String str) {
+        if (str.length() <= 1) return str;
+        else if (str.charAt(0) == 'x') return endX(str.substring(1)) + "x";
+        else return str.charAt(0) + endX(str.substring(1));
+    }
+
+    //We'll say that a "pair" in a string is two instances of a char separated by a char. So "AxA" the A's make a pair.
+    private static int countPairs(String str) {
+        if (str.length() <= 2) return 0;
+        else if (str.charAt(0) == str.charAt(2)) return 1 + countPairs(str.substring(1));
+        else return countPairs(str.substring(1));
+    }
+
+    //Count recursively the total number of "abc" and "aba" substrings that appear in the given string.
+    private static int countAbc(String str) {
+        if (str.length() <= 2) return 0;
+        else if (str.substring(0, 3).equals("abc") || str.substring(0, 3).equals("aba")) return 1 + countAbc(str.substring(1));
+        else return countAbc(str.substring(1));
+    }
+
+    //Given a string, compute recursively (no loops) the number of "11" substrings in the string. The "11" substrings should not overlap.
+    private static int count11(String str) {
+        if (str.length() <= 1) return 0;
+        else if (str.substring(0, 2).equals("11")) return 1 + count11(str.substring(2));
+        else return count11(str.substring(1));
+    }
+
+    //Given a string, return recursively a "cleaned" string where adjacent chars that are the same have been reduced to a single char.
+    private static String stringClean(String str) {
+        if (str.length() <= 1) return str;
+        else if (str.charAt(0) == str.charAt(1)) return stringClean(str.substring(1));
+        else return str.charAt(0) + stringClean(str.substring(1));
+    }
+
+    //Given a string, compute recursively the number of times lowercase "hi" appears in the string, however do not count "hi" that have an 'x' immedately before them.
+    private static int countHi2(String str) {
+        if (str.length() <= 1) return 0;
+        else if (str.length() >  2 && str.substring(0, 3).equals("xhi")) return countHi2(str.substring(3));
+        else if (str.substring(0, 2).equals("hi")) return 1 + countHi2(str.substring(2));
+        else return countHi2(str.substring(1));
+    }
+
+    //Given a string that contains a single pair of parenthesis, compute recursively a new string made of only of the parenthesis and their contents, so "xyz(abc)123" yields "(abc)".
+    private static String parenBit(String str) {
+        if (str.charAt(0) != '(') return parenBit(str.substring(1));
+        else if (str.charAt(str.length() - 1) != ')') return parenBit(str.substring(0, str.length() - 1));
+        return str;
+    }
+
+    //Given a string, return true if it is a nesting of zero or more pairs of parenthesis, like "(())" or "((()))".
+    private static boolean nestParen(String str) {
+        if (str.length() == 0) return true;
+        else if (str.charAt(0) == '(' && str.charAt(str.length() - 1) == ')') return nestParen(str.substring(1, str.length() - 1));
+        return false;
+    }
+
+    //Given a string and a non-empty substring sub, compute recursively the number of times that sub appears in the string, without the sub strings overlapping.
+    private static int strCount(String str, String sub) {
+        if(str.length() < sub.length()) return 0;
+        else if (str.substring(0, sub.length()).equals(sub)) return 1 + strCount(str.substring(sub.length()), sub);
+        else return strCount(str.substring(1), sub);
+    }
+
+    //Given a string and a non-empty substring sub, compute recursively if at least n copies of sub appear in the string somewhere, possibly with overlapping.
+    private static boolean strCopies(String str, String sub, int n) {
+        if (n == 0) return true;
+        else if (sub.length() > str.length()) return false;
+        else if (str.substring(0, sub.length()).equals(sub)) return strCopies(str.substring(1), sub, n - 1);
+        else return strCopies(str.substring(1), sub, n);
+    }
+
+    //Given a string and a non-empty substring sub, compute recursively the largest substring which starts and ends with sub and return its length.
+    private static int strDist(String str, String sub) {
+        if (str.length() == 0) return 0;
+        else if (sub.length() > str.length()) return 0;
+        else if (!str.substring(0, sub.length()).equals(sub)) return strDist(str.substring(1), sub);
+        else if (str.substring(str.length() - sub.length()).equals(sub)) return str.length();
+        else return strDist(str.substring(0, str.length()-1), sub);
+    }
 
 
 }
